@@ -35,7 +35,7 @@ Phát hiện và phân đoạn u não từ ảnh MRI là một bài toán quan t
   - Loss: `CategoricalCrossentropy`
   - Metrics: `Accuracy`, `F1-score`
 - **Phân đoạn**:
-  - Mô hình: `UNet++` với `EfficientNetB3` làm backbone
+  - Mô hình: `UNet` với `EfficientNetB0` làm backbone
   - Loss: `Tversky loss`
   - Metrics: `IoU`, `tversky`
 
