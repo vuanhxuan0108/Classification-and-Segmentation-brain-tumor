@@ -3,7 +3,7 @@
 
 Dự án này thực hiện **phân loại** và **phân đoạn** khối u não từ ảnh MRI, ứng dụng các kỹ thuật Deep Learning hiện đại:
 - Phân loại u não với mô hình **ResNet50**
-- Phân đoạn khối u bằng **UNet++ (backbone EfficientNetB3)**
+- Phân đoạn khối u bằng **UNet (backbone EfficientNetB0)**
 - Tích hợp mô hình vào hệ thống API bằng **FastAPI**
 - Giao diện demo bằng **Streamlit**
 
@@ -121,6 +121,6 @@ streamlit run app/app_streamlit.py
 | Tác vụ       | Mô hình               | Accuracy / IoU | Ghi chú |
 |--------------|------------------------|----------------|---------|
 | Phân loại    | ResNet50               | ~98% Accuracy  |         |
-| Phân đoạn    | UNet++ (EfficientNetB3)| ~0.91 Tversky, ~0.82 IoU  |         |
+| Phân đoạn    | UNet (EfficientNetB0)| ~0.91 Tversky, ~0.81 IoU  |         |
 
 ---
