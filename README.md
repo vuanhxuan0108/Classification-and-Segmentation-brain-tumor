@@ -1,126 +1,116 @@
+# 🧠 Brain Tumor Detection & Segmentation  
 
-# 🧠 Brain Tumor Detection & Segmentation
-
-Dự án này thực hiện **phân loại** và **phân đoạn** khối u não từ ảnh MRI, ứng dụng các kỹ thuật Deep Learning hiện đại:
-- Phân loại u não với mô hình **ResNet50**
-- Phân đoạn khối u bằng **UNet (backbone EfficientNetB0)**
-- Tích hợp mô hình vào hệ thống API bằng **FastAPI**
-- Giao diện demo bằng **Streamlit**
-
----
+Hệ thống này thực hiện **phân loại** và **phân đoạn** khối u não từ ảnh MRI, ứng dụng **Deep Learning** và triển khai hoàn chỉnh qua API và giao diện web.  
+- 🧪 **Phân loại** u não với mô hình **ResNet50**  
+- 🧠 **Phân đoạn** khối u bằng **UNet (EfficientNetB0)**  
+- 🔥 **Giải thích mô hình** bằng **Grad-CAM**  
+- 🌐 **API** với **FastAPI** hỗ trợ chẩn đoán và quản lý bệnh án  
+- 💻 **UI** với **Streamlit**  
+- 📦 **Triển khai** bằng **Docker**  
 
 ## 📁 Mục lục
+- [1. Giới thiệu](#1-giới-thiệu)  
+- [2. API Hệ Thống](#2-api-hệ-thống)  
+- [3. Kiến trúc mô hình](#3-kiến-trúc-mô-hình)  
+- [4. Dữ liệu sử dụng](#4-dữ-liệu-sử-dụng)  
+- [5. Hướng dẫn chạy](#5-hướng-dẫn-chạy)  
+- [6. Đóng gói & Chạy với Docker](#6-đóng-gói--chạy-với-docker)  
+- [7. Cấu trúc thư mục](#7-cấu-trúc-thư-mục)  
+- [8. Giải thích mô hình (Grad-CAM)](#8-giải-thích-mô-hình-grad-cam)  
+- [9. Kết quả](#9-kết-quả)  
 
-- [1. Giới thiệu](#1-giới-thiệu)
-- [2. Kiến trúc mô hình](#2-kiến-trúc-mô-hình)
-- [3. Dữ liệu sử dụng](#3-dữ-liệu-sử-dụng)
-- [4. Hướng dẫn chạy](#4-hướng-dẫn-chạy)
-- [5. Cấu trúc thư mục](#5-cấu-trúc-thư-mục)
-- [6. Kết quả](#6-kết-quả)
+## 1. Giới thiệu  
+Phát hiện và phân đoạn khối u não từ ảnh MRI là một bài toán quan trọng trong y tế. Hệ thống này:  
+- ✅ Phân loại ảnh MRI có khối u hay không  
+- ✅ Phân đoạn vùng khối u chính xác  
+- ✅ Trực quan hóa vùng mô hình quan tâm bằng Grad-CAM  
+- ✅ Lưu trữ & quản lý bệnh án bệnh nhân  
 
----
+## 2. API Hệ Thống  
+API được xây dựng bằng **FastAPI**, hỗ trợ:  
+- 📤 Upload nhiều ảnh MRI để phân tích cùng lúc  
+- 🔍 Trả về nhãn, độ tin cậy và vùng phân đoạn khối u  
+- 🔥 Cung cấp Grad-CAM để giải thích mô hình  
+- 🧾 Lưu và quản lý thông tin bệnh nhân, lịch sử chẩn đoán  
+- 📦 Xuất toàn bộ ảnh kết quả (.zip) và báo cáo chẩn đoán (.pdf)  
 
-## 1. Giới thiệu
+## 3. Kiến trúc mô hình  
+- **Phân loại**:  
+  - `ResNet50` với Loss `CategoricalCrossentropy`  
+  - Metrics: `Accuracy`, `F1-score`  
+- **Phân đoạn**:  
+  - `UNet` (backbone `EfficientNetB0`)  
+  - Loss: `Tversky loss`  
+  - Metrics: `IoU`, `Tversky index`  
 
-Phát hiện và phân đoạn u não từ ảnh MRI là một bài toán quan trọng trong lĩnh vực chẩn đoán hình ảnh y tế. Dự án này giúp:
-- Phân loại ảnh MRI có chứa u não hay không.
-- Nếu có, phân đoạn chính xác vị trí khối u.
+## 4. Dữ liệu sử dụng  
+- 📂 **Phân loại**: [Brain Tumor MRI Dataset (Kaggle)](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)  
+- 📂 **Phân đoạn**: [Brain Tumor Segmentation (BraTS)](https://www.kaggle.com/datasets/anhxunv/brain-turmor-segment-datasets)  
 
----
-
-## 2. Kiến trúc mô hình
-
-- **Phân loại**:
-  - Mô hình: `ResNet50`
-  - Loss: `CategoricalCrossentropy`
-  - Metrics: `Accuracy`, `F1-score`
-- **Phân đoạn**:
-  - Mô hình: `UNet` với `EfficientNetB0` làm backbone
-  - Loss: `Tversky loss`
-  - Metrics: `IoU`, `tversky`
-
----
-
-## 3. Dữ liệu sử dụng
-
-### 📂 Phân loại (Classification)
-- Dataset: **Brain Tumor Classification (MRI)**
-- Link: [Kaggle Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
-
-### 📂 Phân đoạn (Segmentation)
-- Dataset: **Brain Tumor Segmentation (BraTS)**
-- Link: [Kaggle Dataset](https://www.kaggle.com/datasets/anhxunv/brain-turmor-segment-datasets)
-
----
-
-## 4. Hướng dẫn chạy
-
-### ✅ Cài đặt thư viện
+## 5. Hướng dẫn chạy  
+### ✅ Cài đặt thư viện  
 ```bash
 pip install -r requirements.txt
 ```
-
-### 🚀 Huấn luyện mô hình
-**Phân loại:**
+### 🚀 Huấn luyện mô hình  
 ```bash
-# notebook
 notebook/brain-tumor-classification-resnet50.ipynb
-```
-
-**Phân đoạn:**
-```bash
-# notebook
 notebook/brain-tumor-segmentation-unet.ipynb
 ```
-
-### 🌐 Chạy API với FastAPI
+### 🌐 Chạy API  
 ```bash
 python app/main_api.py
 ```
-
-Mở trình duyệt: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-### 💻 Chạy giao diện Streamlit
+👉 Truy cập: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
+### 💻 Chạy giao diện Streamlit  
 ```bash
 streamlit run app/app_streamlit.py
 ```
+👉 Truy cập: [http://localhost:8501](http://localhost:8501)  
 
----
+## 6. Đóng gói & Chạy với Docker  
+### 🛠️ Build image:  
+```bash
+docker build -t brain-tumor-app .
+```
+### 🚀 Chạy container:  
+```bash
+docker run -d -p 8000:8000 -p 8501:8501 brain-tumor-app
+```
+### 🐳 Hoặc dùng docker-compose:  
+```bash
+docker-compose up --build -d
+```
+👉 Sau khi chạy:  
+- FastAPI: [http://localhost:8000/docs](http://localhost:8000/docs)  
+- Streamlit: [http://localhost:8501](http://localhost:8501)  
 
-## 5. Cấu trúc thư mục
-
+## 7. Cấu trúc thư mục  
 ```
 .
-├── code_py/
-│   ├── grad_cam.py
-│   ├── load_datasets.py
-│   ├── preprocessing.py
-│   └── utils.py
-├── image_model/
-│   ├── resnet_kiank.png
-│   └── ...
-├── model_save/
-│   ├── best_model_resnet50.keras
-│   └── best_model_efficient_unet.keras
-├── notebook/
-│   ├── brain-tumor-classification-resnet50.ipynb
-│   └── brain-tumor-segmentation-unet.ipynb
 ├── app/
-|   ├── app_streamlit.py
-|   ├── main_api.py
-|   ├── model_definitions.py
-|   └── utils_api.py
+│   ├── app_streamlit.py
+│   ├── main_api.py
+│   ├── model_definitions.py
+│   └── utils_api.py
+├── model_save/
+├── notebook/
+├── .dockerignore
+├── docker-compose.yml
+├── Dockerfile
 ├── requirements.txt
+├── start.sh
 └── README.md
 ```
 
----
+## 8. Giải thích mô hình (Grad-CAM)  
+💡 Hệ thống tích hợp **Grad-CAM** để trực quan hóa vùng ảnh MRI mà mô hình ResNet50 sử dụng:  
+- 🎯 Giúp bác sĩ hiểu **tại sao mô hình dự đoán như vậy**  
+- 🔥 UI Streamlit cho phép bật/tắt **Grad-CAM overlay**  
 
-## 6. Kết quả
-
+## 9. Kết quả  
 | Tác vụ       | Mô hình               | Accuracy / IoU | Ghi chú |
 |--------------|------------------------|----------------|---------|
-| Phân loại    | ResNet50               | ~98% Accuracy  |         |
-| Phân đoạn    | UNet (EfficientNetB0)| ~0.91 Tversky, ~0.81 IoU  |         |
+| Phân loại    | ResNet50               | ~98% Accuracy  | Hỗ trợ XAI (Grad-CAM) |
+| Phân đoạn    | UNet (EfficientNetB0) | ~0.91 Tversky, ~0.81 IoU |         |
 
----

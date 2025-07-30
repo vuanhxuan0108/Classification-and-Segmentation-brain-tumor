@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from utils_api import *
-from code_py.grad_cam import make_prediction as make_gradcam
+from src.grad_cam import make_prediction as make_gradcam
 from PIL import Image
 import numpy as np
 import io

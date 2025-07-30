@@ -1,0 +1,19 @@
+# Git
+.git
+.gitignore
+myenv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Dataset, logs, models
+notebook/
+logs/
+checkpoints/
+docs/
+assets/
+
+# File hệ thống
+.DS_Store
+.env

@@ -1,13 +1,19 @@
 import cv2
 import numpy as np
-from model_definitions import build_classifier_model, build_segmentation_model
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from code_py.preprocessing import *
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 os.environ["SM_FRAMEWORK"] = "tf.keras"
 import segmentation_models as sm
-preprocess_input = sm.get_preprocessing('efficientnetb1')
+from model_definitions import build_classifier_model, build_segmentation_model
+from src.preprocessing import *
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+preprocess_input = sm.get_preprocessing('efficientnetb0')
 
 def load_classifier_model(model_path='model_save/best_model_resnet50.keras'):
     model = build_classifier_model()

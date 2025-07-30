@@ -113,8 +113,8 @@ elif st.session_state.page == "analyze":
 
             if st.button("📝 Export Report (PDF)"):
                 pdf = FPDF()
-                pdf.add_font("DejaVu", "", "DejaVuSans.ttf", uni=True)
-                pdf.add_font("DejaVu", "B", "DejaVuSans-Bold.ttf", uni=True)
+                pdf.add_font("DejaVu", "", "assets/font/DejaVuSans.ttf", uni=True)
+                pdf.add_font("DejaVu", "B", "assets/font/DejaVuSans-Bold.ttf", uni=True)
                 pdf.set_auto_page_break(auto=True, margin=15)
                 pdf.add_page()
 
